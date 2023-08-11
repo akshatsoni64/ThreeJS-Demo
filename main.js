@@ -49,9 +49,9 @@ function addStar(){
 }
 
 Array(200).fill().forEach(addStar);
-const url_image = "https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-const spaceTexture = new THREE.TextureLoader().load(url_image);
-scene.background = spaceTexture;
+// const url_image = "https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+// const spaceTexture = new THREE.TextureLoader().load(url_image);
+// scene.background = spaceTexture;
 function animate(){
   requestAnimationFrame(animate);
 
@@ -64,6 +64,21 @@ function animate(){
   renderer.render(scene, camera);
 }
 
+function moveCamera(){
+  const t = document.body.getBoundingClientRect().top;
+  akshat2.rotation.x += 0.05;
+  akshat2.rotation.y += 0.075;
+  akshat2.rotation.z += 0.05;
+
+  akshat.rotation.y += 0.01;
+  akshat.rotation.z += 0.01;
+
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.position.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
 animate();
 
 const akshatTexture = new THREE.TextureLoader().load("https://media.licdn.com/dms/image/D4D35AQHJMuoKq_qEzg/profile-framedphoto-shrink_200_200/0/1688025924682?e=1692367200&v=beta&t=impnwmgYogwoFulYUVwEEeenGkfUuuW2LjlC9XPriSI");
@@ -75,10 +90,12 @@ const akshat = new THREE.Mesh(
 scene.add(akshat);
 
 const akshat2 = new THREE.Mesh(
-  new THREE.SphereGeometry(-30, 32, 32),
+  new THREE.SphereGeometry(3, 32, 32),
   new THREE.MeshStandardMaterial({
     map: akshatTexture
   })
 );
 
 scene.add(akshat2);
+akshat2.position.z = 30;
+akshat2.position.setX(-10);
